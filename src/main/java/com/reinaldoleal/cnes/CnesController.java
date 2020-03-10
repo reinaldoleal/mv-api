@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,23 +17,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import net.minidev.json.JSONObject;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/company")
 class CnesController {
 	
-	@GetMapping(path = "/company")
-	public ResponseEntity<Object> getAll() {
+	@GetMapping
+	public ResponseEntity<Object> listCompanies(@RequestParam(required = false) Map<String, String> params) {
 		
 		HttpURLConnection connection = null;
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			URL url = new URL("http://localhost:3000/empresas");   
+			String urlStr = "http://localhost:3000/empresas";
+			String paramsStr = "";
+
+			JSONObject jObj = new JSONObject( params );
+			
+			for(Object argumentsKey : jObj.keySet()) {
+				if (paramsStr == "") {
+					paramsStr += "?";
+				} else {
+					paramsStr += "&";
+				}
+
+				paramsStr = paramsStr + argumentsKey+"="+jObj.get(argumentsKey);
+			}
+			
+			URL url = new URL(urlStr + paramsStr);   
 			connection = (HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("GET");
+
 			connection.setDoOutput(true);
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Content-Type", "application/json");
+
 			InputStream content = connection.getInputStream();
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(content));
@@ -52,9 +76,11 @@ class CnesController {
 			connection.disconnect();
 		}
 	}
-	
-	@GetMapping(path = "/company/{id}")
+
+	@GetMapping("/{id}")
 	public ResponseEntity<Object> getCompany(@PathVariable String id) {
+
+		System.out.print("getCompany");
 
 		HttpURLConnection connection = null;
 		StringBuilder sb = new StringBuilder();
@@ -62,8 +88,11 @@ class CnesController {
 		try {
 			URL url = new URL("http://localhost:3000/empresas/" + id);   
 			connection = (HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("GET");
+
 			connection.setDoOutput(true);
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Content-Type", "application/json");
+
 			InputStream content = connection.getInputStream();
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(content));
@@ -84,7 +113,7 @@ class CnesController {
 		}
 	}
 
-	@DeleteMapping(path = "/company/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteCompany(@PathVariable String id) {
 
 		HttpURLConnection connection = null;
@@ -93,8 +122,10 @@ class CnesController {
 		try {
 			URL url = new URL("http://localhost:3000/empresas/" + id);   
 			connection = (HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("DELETE");
+
 			connection.setDoOutput(true);
+			connection.setRequestMethod("DELETE");
+			connection.setRequestProperty("Content-Type", "application/json");
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String line;
@@ -114,7 +145,7 @@ class CnesController {
 		}
 	}
 
-	@PutMapping(path = "/company/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateCompany(@PathVariable String id, @RequestBody String company) {
 		
 		HttpURLConnection connection = null;
@@ -150,8 +181,11 @@ class CnesController {
 		}
 	}
 
-	@PostMapping(path = "/company")
+	@PostMapping
 	public ResponseEntity<Object> createCompany(@RequestBody String company) {
+
+		System.out.println("createCompany");	
+		
 		HttpURLConnection connection = null;
 		StringBuilder sb = new StringBuilder();
 
