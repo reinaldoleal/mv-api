@@ -80,8 +80,8 @@ class CompanyController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Object> getCompany(@PathVariable String id) {
+	@GetMapping("/{co_cnes}")
+	public ResponseEntity<Object> getCompany(@PathVariable Integer co_cnes) {
 
 		System.out.print("getCompany");
 
@@ -89,7 +89,7 @@ class CompanyController {
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			URL url = new URL("http://localhost:3000/empresas/" + id);   
+			URL url = new URL("http://localhost:3000/empresas/" + co_cnes);   
 			connection = (HttpURLConnection)url.openConnection();
 
 			connection.setDoOutput(true);
@@ -119,14 +119,14 @@ class CompanyController {
 		}
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> deleteCompany(@PathVariable String id) {
+	@DeleteMapping("/{co_cnes}")
+	public ResponseEntity<Object> deleteCompany(@PathVariable Integer co_cnes) {
 
 		HttpURLConnection connection = null;
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			URL url = new URL("http://localhost:3000/empresas/" + id);   
+			URL url = new URL("http://localhost:3000/empresas/" + co_cnes);   
 			connection = (HttpURLConnection)url.openConnection();
 
 			connection.setDoOutput(true);
@@ -154,14 +154,14 @@ class CompanyController {
 		}
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateCompany(@PathVariable String id, @RequestBody String company) {
+	@PutMapping("/{co_cnes}")
+	public ResponseEntity<Object> updateCompany(@PathVariable Integer co_cnes, @RequestBody String company) {
 		
 		HttpURLConnection connection = null;
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			URL url = new URL("http://localhost:3000/empresas/" + id);   
+			URL url = new URL("http://localhost:3000/empresas/" + co_cnes);   
 			connection = (HttpURLConnection)url.openConnection();
 
 			connection.setDoOutput(true);
