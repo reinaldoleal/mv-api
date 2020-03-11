@@ -1,4 +1,4 @@
-package com.reinaldoleal.cnes;
+package com.reinaldoleal.cnes.resource;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -26,7 +26,7 @@ import net.minidev.json.JSONObject;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/company")
-class CnesController {
+class CompanyController {
 	
 	@GetMapping
 	public ResponseEntity<Object> listCompanies(@RequestParam(required = false) Map<String, String> params) {
@@ -60,12 +60,15 @@ class CnesController {
 			InputStream content = connection.getInputStream();
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(content));
-			String line;
-			while ((line = in.readLine()) != null) {
-				sb.append(line);
-			}
 			
-			in.close();
+			try {
+				String line;
+				while ((line = in.readLine()) != null) {
+					sb.append(line);
+				}
+			} finally {
+				in.close();
+			}
 			
 			return new ResponseEntity<Object>(sb, HttpStatus.OK);
 		} catch (Exception e) {
@@ -96,12 +99,15 @@ class CnesController {
 			InputStream content = connection.getInputStream();
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(content));
-			String line;
-			while ((line = in.readLine()) != null) {
-				sb.append(line);
+
+			try {
+				String line;
+				while ((line = in.readLine()) != null) {
+					sb.append(line);
+				}
+			} finally {
+				in.close();
 			}
-			
-			in.close();
 			
 			return new ResponseEntity<Object>(sb, HttpStatus.OK);
 		} catch (Exception e) {
@@ -128,12 +134,15 @@ class CnesController {
 			connection.setRequestProperty("Content-Type", "application/json");
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
-			while ((line = in.readLine()) != null) {
-				sb.append(line);
-			}
 			
-			in.close();
+			try {
+				String line;
+				while ((line = in.readLine()) != null) {
+					sb.append(line);
+				}
+			} finally {
+				in.close();
+			}
 			
 			return new ResponseEntity<Object>(sb, HttpStatus.OK);
 		} catch (Exception e) {
@@ -164,12 +173,15 @@ class CnesController {
 			out.flush();
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
-			while ((line = in.readLine()) != null) {
-				sb.append(line);
-			}
 			
-			in.close();
+			try {
+				String line;
+				while ((line = in.readLine()) != null) {
+					sb.append(line);
+				}
+			} finally {
+				in.close();
+			}
 			
 			return new ResponseEntity<Object>(sb, HttpStatus.OK);
 		} catch (Exception e) {
@@ -202,12 +214,15 @@ class CnesController {
 			out.flush();
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
-			while ((line = in.readLine()) != null) {
-				sb.append(line);
-			}
 			
-			in.close();
+			try {
+				String line;
+				while ((line = in.readLine()) != null) {
+					sb.append(line);
+				}
+			} finally {
+				in.close();
+			}
 			
 			return new ResponseEntity<Object>(sb, HttpStatus.OK);
 		} catch (Exception e) {
