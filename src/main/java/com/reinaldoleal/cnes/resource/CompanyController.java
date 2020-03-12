@@ -53,7 +53,6 @@ class CompanyController {
 			URL url = new URL(urlStr + paramsStr);   
 			connection = (HttpURLConnection)url.openConnection();
 
-//			connection.setDoOutput(true);
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Content-Type", "application/json");
 
@@ -92,7 +91,6 @@ class CompanyController {
 			URL url = new URL("http://localhost:3000/empresas/" + co_cnes);   
 			connection = (HttpURLConnection)url.openConnection();
 
-//			connection.setDoOutput(true);
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Content-Type", "application/json");
 
@@ -129,7 +127,6 @@ class CompanyController {
 			URL url = new URL("http://localhost:3000/empresas/" + co_cnes);   
 			connection = (HttpURLConnection)url.openConnection();
 
-//			connection.setDoOutput(true);
 			connection.setRequestMethod("DELETE");
 			connection.setRequestProperty("Content-Type", "application/json");
 			
